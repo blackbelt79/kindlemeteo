@@ -2,8 +2,8 @@ name: Aggiorna meteo
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
-  workflow_dispatch:
+    - cron: "7,37 * * * *"    # ogni 30 minuti, ai minuti 07 e 37 (GitHub ritarda meno fuori dall'ora piena)
+  workflow_dispatch:          # permette di lanciarlo a mano dalla scheda Actions
 
 permissions:
   contents: write
