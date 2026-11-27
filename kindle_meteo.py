@@ -29,7 +29,7 @@ URL = (
     "&current=temperature_2m,apparent_temperature,relative_humidity_2m,"
     "weather_code,wind_speed_10m"
     "&daily=weather_code,temperature_2m_max,temperature_2m_min,"
-    "precipitation_probability_max"
+    "precipitation_probability_max,sunrise,sunset"
     "&timezone=auto&forecast_days=5"
 )
 
@@ -79,6 +79,8 @@ def dati_demo():
             "temperature_2m_max": [13, 11, 10, 12, 14],
             "temperature_2m_min": [7, 6, 5, 4, 5],
             "precipitation_probability_max": [10, 60, 80, 20, 0],
+            "sunrise": ["2026-11-27T07:33", "2026-11-28T07:34", "2026-11-29T07:36", "2026-11-30T07:37", "2026-12-01T07:38"],
+            "sunset": ["2026-11-27T16:50", "2026-11-28T16:49", "2026-11-29T16:48", "2026-11-30T16:48", "2026-12-01T16:47"],
         },
     }
 
@@ -100,13 +102,17 @@ def disegna(dati):
     # Condizioni attuali
     c = dati["current"]
     centra(d, 150, f"{round(c['temperature_2m'])}°", font(210, True))
-    centra(d, 400, descrizione(c["weather_code"]), font(46))
+    centra(d, 388, descrizione(c["weather_code"]), font(46))
     dettagli = (
         f"Percepita {round(c['apparent_temperature'])}°   "
         f"Umidità {round(c['relative_humidity_2m'])}%   "
         f"Vento {round(c['wind_speed_10m'])} km/h"
     )
-    centra(d, 470, dettagli, font(26))
+    centra(d, 452, dettagli, font(26))
+    oggi = dati["daily"]
+    sole = (f"Alba {oggi['sunrise'][0][-5:]}   "
+            f"Tramonto {oggi['sunset'][0][-5:]}")
+    centra(d, 492, sole, font(28, True))
 
     d.line([(40, 540), (W - 40, 540)], fill=0, width=3)
 
