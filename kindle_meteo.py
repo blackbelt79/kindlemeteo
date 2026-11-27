@@ -14,6 +14,12 @@ from datetime import datetime
 
 from PIL import Image, ImageDraw, ImageFont
 
+try:
+    from zoneinfo import ZoneInfo
+    FUSO = ZoneInfo("Europe/Rome")   # i server di GitHub lavorano in UTC
+except Exception:
+    FUSO = None
+
 # ---- DA MODIFICARE -------------------------------------------------------
 LAT = 45.1847          # latitudine di Pavia
 LON = 9.1582           # longitudine di Pavia
@@ -93,7 +99,7 @@ def centra(draw, y, testo, f, riempimento=0):
 def disegna(dati):
     img = Image.new("L", (W, H), 255)  # scala di grigi, sfondo bianco
     d = ImageDraw.Draw(img)
-    adesso = dati.get("_ora") or datetime.now()
+    adesso = datetime.now(FUSO) if FUSO else datetime.now()
 
     # Intestazione
     centra(d, 30, CITTA, font(44, True))
